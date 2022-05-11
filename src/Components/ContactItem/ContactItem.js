@@ -1,19 +1,19 @@
-import PropTypes from 'prop-types';
+import { Item, Button } from "../ContactList/ContactList.styled";
+import { useDeleteContactMutation } from "redux/CreateApiSlice";
 
-const ContactItem = ({ id, name, number, onDeleteContact }) => {
-    <li>
-        {name}: {number}
-        <button type="button" onClick={() => onDeleteContact(id)}>
-            Delete
-        </button>
-    </li>
+
+
+export const ContactItem = ({ contact }) => {
+
+    const [deleteContact, { isLoading }] = useDeleteContactMutation();
+
+    return (
+    
+        <Item>
+            {contact.name}: {contact.phone}
+            <Button type="button" id={contact.id} onClick={() => deleteContact(contact.id)}>
+                { isLoading? 'Processing...' : 'Delete' }
+            </Button>
+        </Item>
+    );
 };
-
-ContactItem.propTypes = {
-  contactId: PropTypes.string.isRequired,
-  name: PropTypes.string.isRequired,
-  number: PropTypes.string.isRequired,
-  onDeleteContact: PropTypes.func.isRequired,
-};
-
-export default ContactItem;
